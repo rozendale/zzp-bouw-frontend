@@ -230,12 +230,22 @@ function FactuurEdit() {
     const [opdrachtgever, setOpdrachtgever] = useState("");
     useEffect(() => {
         data && setFactuurnummer(data?.factuur_nr)
-        // eindelijk werkt bestaande data in edit form (hiermee)
-
-        // Deze github deudt niet. ZET DIT IN EEN ANDER BESTAAND PROJECT WAAR WEL GITHUB IS
-
-
         data && setOpdrachtgever(data?.opdrachtgever.naam)
+        // data && setOpdrachtgever(data?.opdrachtgever.status)
+    // Factuur nr:
+    // Opdrachtgever:
+    // Status:
+    // Betreft:
+    // Factuur datum:
+    // Herinnering datum1:
+    // Herinnering datum2:
+    // Aanmaningsdatum:
+    // Btw tarief:
+    // Extra text:
+    // Uren:
+    // Bedrag ex btw:
+    // Bedrag totaal
+
     }, [data]);
 
     function handleWerkzaamheid(e: any, id:number|undefined) {
