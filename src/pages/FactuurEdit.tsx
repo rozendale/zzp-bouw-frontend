@@ -226,26 +226,29 @@ function FactuurEdit() {
     const contactenArray:any = data2?.map((item: { naam:string; }) => item.naam);
     // const [imgHeight, setImgHeight] = useState("384");
     // const { data:data1, error:error1, isLoading:isLoading1, isError:isError1  } = useWerkzaamhedenDetailQuery(1);
+    // const { register, reset } = useForm();
     const [factuurnummer, setFactuurnummer] = useState(0);
     const [opdrachtgever, setOpdrachtgever] = useState("");
-    useEffect(() => {
-        data && setFactuurnummer(data?.factuur_nr)
-        data && setOpdrachtgever(data?.opdrachtgever.naam)
-        // data && setOpdrachtgever(data?.opdrachtgever.status)
-    // Factuur nr:
-    // Opdrachtgever:
-    // Status:
-    // Betreft:
-    // Factuur datum:
-    // Herinnering datum1:
-    // Herinnering datum2:
-    // Aanmaningsdatum:
-    // Btw tarief:
-    // Extra text:
-    // Uren:
-    // Bedrag ex btw:
-    // Bedrag totaal
+    const [status, setStatus] = useState("");
+    const [betreft, setBetreft] = useState("");
+    const [factuurdatum, setFactuurdatum] = useState(0);
+    const [herinneringdatum1, setHerinneringdatum1] = useState(0);
+    const [herinneringdatum2, setHerinneringdatum2] = useState(0);
+    const [aanmaningsdatum, setAanmaningsdatum] = useState(0);
+    const [btwTarief, setBtwTarief] = useState(0);
+    const [extraText, setExtraText] = useState("");
 
+    useEffect(() => {
+        data && setFactuurnummer(data?.factuur_nr);
+        data && setOpdrachtgever(data?.opdrachtgever.naam);
+        data && setStatus(data?.status);
+        data && setBetreft(data?.betreft);
+        data && setFactuurdatum(data?.factuur_datum);
+        data && setHerinneringdatum1(+data?.herinnering_datum1);
+        data && setHerinneringdatum2(+data?.herinnering_datum2);
+        data && setAanmaningsdatum(+data?.aanmaningsdatum);
+        data && setBtwTarief(+data?.btw_tarief);
+        data && setExtraText(data?.extra_text);
     }, [data]);
 
     function handleWerkzaamheid(e: any, id:number|undefined) {
@@ -254,8 +257,6 @@ function FactuurEdit() {
         dispatch(setHistoryPathAPI(`/beheer/facturen/edit/${id}`))
         navigate(`/beheer/facturen/edit/${id}`)
     }
-
-
     let content:any
     if (isLoading) {
         // NotificationManager.warning("Loading your models")
@@ -292,32 +293,157 @@ function FactuurEdit() {
                     </Paper>
                 </Grid>
                 <Grid size={1}></Grid>
-                <Grid size={4}>
-                    <Paper sx={{height: 100}}>
-                        <FormControl fullWidth>
-                            <Autocomplete
-                                sx={{ marginBottom: 2 }}
-                                id="select-opdrachtgever-naam"
-                                value={opdrachtgever}
-                                options={contactenArray}
-                                isOptionEqualToValue={(option, value) => true}
-                                getOptionLabel={(option) => option || ""}
-                                onChange={(event: React.SyntheticEvent, newValue: any) => {
-                                    setOpdrachtgever(newValue)                    
-                            }}
-                                renderInput={(params) => <TextField {...params} label="Opdrachtgever" />}
-                            >
-                                
-                            </Autocomplete>
-                            
-                        </FormControl>
-                        {/* <Typography align="left">
-                            {data.opdrachtgever.naam}<br/>
-                            {data.opdrachtgever.straat_nummer}<br/>
-                            {data.opdrachtgever.postcode} {data.opdrachtgever.plaats}<br/>
-                        </Typography> */}
-                    </Paper>
-                </Grid>
+                <Grid size={12}>
+                    {/* <Paper sx={{height: 100}}> */}
+                        <Grid>
+                        {/* <Grid item xs={12} sm={12} md={12} lg={12} xl={6} height= "100%"> */}
+                            <Box sx={{ minWidth: 120, padding: 2}}>
+                                <FormControl fullWidth>
+                                    <TextField  type="number" 
+                                        label="Factuur Nummer: "
+                                        value={factuurnummer}
+                                        onChange={(event) => {
+                                            setFactuurnummer(+event.target.value)
+                                        }}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                        <Grid>
+                            <Box sx={{ minWidth: 120, padding: 2}}>
+                                <FormControl fullWidth>
+                                    <Autocomplete
+                                        sx={{ marginBottom: 2 }}
+                                        id="select-opdrachtgever-naam"
+                                        value={opdrachtgever}
+                                        options={contactenArray}
+                                        isOptionEqualToValue={(option, value) => true}
+                                        getOptionLabel={(option) => option || ""}
+                                        onChange={(event: React.SyntheticEvent, newValue: any) => {
+                                            setOpdrachtgever(newValue)            
+                                    }}
+                                        renderInput={(params) => <TextField {...params} label="Opdrachtgever" />}
+                                    >
+                                        
+                                    </Autocomplete>
+                                    
+                                </FormControl>
+                                {/* <Typography align="left">
+                                    {data.opdrachtgever.naam}<br/>
+                                    {data.opdrachtgever.straat_nummer}<br/>
+                                    {data.opdrachtgever.postcode} {data.opdrachtgever.plaats}<br/>
+                                </Typography> */}
+                            </Box>
+                        </Grid>
+
+                        <Grid>
+                            <Box sx={{ minWidth: 120, padding: 2}}>
+                                <FormControl fullWidth>
+                                    <TextField  type="string" 
+                                        label="Status: "
+                                        value={status}
+                                        onChange={(event) => {
+                                            setStatus(event.target.value)
+                                        }}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                        <Grid>
+                            <Box sx={{ minWidth: 120, padding: 2}}>
+                                <FormControl fullWidth>
+                                    <TextField  type="text" 
+                                        label="Betreft: "
+                                        value={betreft}
+                                        onChange={(event) => {
+                                            setBetreft(event.target.value)
+                                        }}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                        <Grid>
+                            <Box sx={{ minWidth: 120, padding: 2}}>
+                                <FormControl fullWidth>
+                                    <TextField  type="number" 
+                                        label="Factuur Datum: "
+                                        value={factuurdatum}
+                                        onChange={(event) => {
+                                            setFactuurdatum(+event.target.value)
+                                        }}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                        <Grid>
+                            <Box sx={{ minWidth: 120, padding: 2}}>
+                                <FormControl fullWidth>
+                                    <TextField  type="number" 
+                                        disabled
+                                        label="Herinnering Datum: "
+                                        value={herinneringdatum1}
+                                        onChange={(event) => {
+                                            setHerinneringdatum1(+event.target.value)
+                                        }}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                        <Grid>
+                            <Box sx={{ minWidth: 120, padding: 2}}>
+                                <FormControl fullWidth>
+                                    <TextField  type="number" 
+                                        disabled
+                                        label="2e Herinnering Datum: "
+                                        value={herinneringdatum2}
+                                        onChange={(event) => {
+                                            setHerinneringdatum2(+event.target.value)
+                                        }}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                        <Grid>
+                            <Box sx={{ minWidth: 120, padding: 2}}>
+                                <FormControl fullWidth>
+                                    <TextField  type="number" 
+                                        disabled
+                                        label="Aanmaningsdatum: "
+                                        value={aanmaningsdatum}
+                                        onChange={(event) => {
+                                            setAanmaningsdatum(+event.target.value)
+                                        }}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                        <Grid>
+                            <Box sx={{ minWidth: 120, padding: 2}}>
+                                <FormControl fullWidth>
+                                    <TextField  type="number" 
+                                        label="BTW tarief: "
+                                        value={btwTarief}
+                                        onChange={(event) => {
+                                            setBtwTarief(+event.target.value)
+                                        }}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                        <Grid>
+                            <Box sx={{ minWidth: 120, padding: 2}}>
+                                <FormControl fullWidth>
+                                    <TextField  type="string" 
+                                        label="Extra Text: "
+                                        value={extraText}
+                                        onChange={(event) => {
+                                            setExtraText(event.target.value)
+                                        }}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                    </Grid>
                 <Grid size={7}></Grid>
 
                 <Grid size={12}>
