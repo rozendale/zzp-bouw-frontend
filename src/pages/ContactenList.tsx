@@ -29,9 +29,9 @@ function ContactenList() {
         // let datetaken = moment(data.date_taken).format('YYYY/MM/DD HH:mm')
     const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', width: 100 },
-        { field: 'naam', headerName: 'Naam', width: 250 },
+        { field: 'naam', headerName: 'Naam', width: 250, renderCell: (params) => (params.id && <Link href={`../../beheer/contact/${params.id}`}>{params.value}</Link>)},
         // { field: 'view', headerName: 'Navigeer', width: 150 },
-        { field: 'edit', headerName: 'Edit', width: 70, renderCell: (params) => (<Link href={`../beheer/contact/${params.id}`}><EditIcon/></Link>)}
+        { field: 'edit', headerName: 'Edit', width: 70, renderCell: (params) => (<Link href={`../beheer/contacten/edit/${params.id}`}><EditIcon/></Link>)}
         ];
     const rows = data.map((item) => (
         {"id": item.id, "naam": item.naam, "edit": item.slug}

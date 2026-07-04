@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
 import ContactenList from './pages/ContactenList';
 import ContactenDetail from './pages/ContactenDetail';
+import ContactenUpdate from './pages/ContactenUpdate';
 import ProjectList from './pages/ProjectList';
 import ProjectDetail from './pages/ProjectDetail';
 import WerkOmschrijvingenList from './pages/WerkOmschrijvingenList';
@@ -23,6 +24,7 @@ import DesignerList from './pages/icm/DesignerList';
 const router = createBrowserRouter([
   {path: '/', element: <App />},
   {path: '/beheer/contacten', element: <ContactenList />},
+  {path: '/beheer/contacten/edit/:id', element: <ContactenUpdate />},
   {path: '/beheer/contact/:id', element: <ContactenDetail />},
   {path: '/beheer/projecten', element: <ProjectList />},
   {path: '/beheer/project/:id', element: <ProjectDetail />},
