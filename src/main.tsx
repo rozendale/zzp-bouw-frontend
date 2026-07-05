@@ -15,7 +15,10 @@ import WerkOmschrijvingenDetail from './pages/WerkOmschrijvingenDetail';
 import FactuurList from './pages/FactuurList';
 import FactuurEdit from './pages/FactuurEdit';
 import FactuurNew from './pages/FactuurNew';
-import FactuurDetail from './pages/FactuurDetail.tsx';
+import FactuurDetail from './pages/FactuurDetail';
+import TransactieList from './pages/TransactieList';
+// import TransactieEdit from './pages/TransactieEdit';
+// import TransactieNew from './pages/TransactieNew';
 import WerkzaamhedenListList from './pages/WerkzaamhedenList.tsx';
 import WerkzaamhedenDetail from './pages/WerkzaamhedenDetail';
 import NumberList from './pages/primaze/NumberList';
@@ -30,12 +33,16 @@ const router = createBrowserRouter([
   {path: '/beheer/project/:id', element: <ProjectDetail />},
   {path: '/beheer/werkomschrijvingen', element: <WerkOmschrijvingenList />},
   {path: '/beheer/werkomschrijving/:id', element: <WerkOmschrijvingenDetail />},
+  {path: '/beheer/werkzaamheden', element: <WerkzaamhedenListList />},
+  {path: '/beheer/werkzaamheid/:id', element: <WerkzaamhedenDetail />},
   {path: '/beheer/facturen', element: <FactuurList />},
   {path: '/beheer/factuur/:id', element: <FactuurDetail />},
   {path: '/beheer/facturen/edit/:id', element: <FactuurEdit />},
   {path: '/beheer/facturen/new', element: <FactuurNew />},
-  {path: '/beheer/werkzaamheden', element: <WerkzaamhedenListList />},
-  {path: '/beheer/werkzaamheid/:id', element: <WerkzaamhedenDetail />},
+  {path: '/beheer/transacties', element: <TransactieList />},
+  // {path: '/beheer/transacties/edit/:id', element: <TransactieEdit />},
+  // {path: '/beheer/transacties/new', element: <TransactieNew />},
+
   {path: '/priem/test', element: <NumberList />},
   {path: '/icm/designer', element: <DesignerList />},
 ]);

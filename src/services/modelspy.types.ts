@@ -116,6 +116,38 @@ export interface IWerkzaamhedenDetail{
     subtotaal: string;
 }
 
+export interface ITransactieList{
+    id?: number;
+    invuldatum: number;
+    datum: number;
+    jaar: number;
+    kwartaal: number;
+    week: number;
+    maand: number;
+    bedrag: string;
+    bankrekening: string;
+    grootboekrekening: string;
+    btw: number;
+    btw_bedrag: string;
+    zakelijk_ex_btw: string;
+}
+
+export interface ITransactieForm{
+    // id?: number;
+    invuldatum: number;
+    datum: number;
+    // jaar: number;
+    // kwartaal: number;
+    // week: number;
+    // maand: number;
+    bedrag: string;
+    bankrekening: string;
+    grootboekrekening: string;
+    btw: number;
+    // btw_bedrag: string;
+    // zakelijk_ex_btw: string;
+}
+
 export interface INumberList{
     number: number;
     prime: false;

@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
-import type { IContactenList, IContactenDetail, IProjectList, IProjectDetail, IWerkOmschrijvingenList, IWerkOmschrijvingenDetail, IFactuurList, IFactuurDetail, IWerkzaamhedenList, IWerkzaamhedenDetail, IDesignerList} from './modelspy.types';
+import type { IContactenList, IContactenDetail, IProjectList, IProjectDetail, IWerkOmschrijvingenList, IWerkOmschrijvingenDetail, IFactuurList, IFactuurDetail, IWerkzaamhedenList, IWerkzaamhedenDetail, ITransactieList, ITransactieForm, IDesignerList} from './modelspy.types';
 import type { INumberList} from './modelspy.types';
 
 export const apiSlice = createApi({
@@ -12,7 +12,7 @@ export const apiSlice = createApi({
         // proxy: "http://localhost:8080/API"
     }),
     keepUnusedDataFor: 360,
-    tagTypes: ['tContacten', 'tProject', 'tWerkOmschrijvingen', 'tWerkzaamheden', 'tFactuur', 'tNumber', 'tDesigner'],
+    tagTypes: ['tContacten', 'tProject', 'tWerkOmschrijvingen', 'tWerkzaamheden', 'tFactuur', 'tNumber', 'tDesigner', 'tTransactie'],
     endpoints: (builder) => ({
 
         // Contacten
@@ -205,6 +205,45 @@ export const apiSlice = createApi({
         invalidatesTags: ['tFactuur']
         }),
 
+        // Transactie
+        TransactieList: builder.query<[ITransactieList], void>({
+            query: () => ({
+                url: `transactie/`,
+            }),
+            keepUnusedDataFor: 1520,
+        providesTags: ['tTransactie']
+        }),
+        // TransactieDetail: builder.query<ITransactieList, number>({
+        //     query: (path) => ({
+        //         url: `transactie/${path}/`,
+        //     }),
+        // providesTags: ['tTransactie']
+        // }),
+        TransactieCreate: builder.mutation<void, ITransactieForm>({
+            query: (args) => ({
+                url: `transactie/`,
+                method: 'POST',
+                body: args,
+            }),
+            invalidatesTags: ['tTransactie']
+        }),
+        TransactieUpdate: builder.mutation<void, [ITransactieForm, number]>({
+            query: (args) => ({
+                url: `transactie/${args[1]}/`,
+                method: 'PUT',
+                body: args[0]
+            }),
+        invalidatesTags: ['tTransactie']
+        }),
+        TransactieDelete: builder.mutation<void, number>({
+            query: (path) => ({
+                url: `transactie/${path}`,
+                method: 'DELETE',
+            }),
+        invalidatesTags: ['tTransactie']
+        }),
+
+
         // Primeza
         NumberList: builder.query<[INumberList], void>({
             query: () => ({
@@ -251,6 +290,11 @@ export const {
     useFactuurCreateMutation,
     useFactuurUpdateMutation,
     useFactuurDeleteMutation,
+    //Transactie
+    useTransactieListQuery,
+    useTransactieCreateMutation,
+    useTransactieUpdateMutation,
+    useTransactieDeleteMutation,
     //Werkzaamheden
     useWerkzaamhedenListQuery,
     useWerkzaamhedenDetailQuery,

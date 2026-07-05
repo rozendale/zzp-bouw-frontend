@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import FormControl from '@mui/material/FormControl';
-// import TextField from '@mui/material/TextField';
+import { useNavigate } from "react-router-dom";
 import {FormInputText } from "../form-component/FormInputText";
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -18,7 +18,7 @@ function ContactenUpdate() {
 
     const useParam:any = useParams();
     // const href:string = `/beheer/contacten/`;
-    // const navigate  = useNavigate();
+    const navigate  = useNavigate();
     const [textValue, setTextValue] = useState<string>("");
     const { data, error, isLoading, isError  } = useContactenDetailQuery(useParam.id);
     // const { data, isLoading, isError  } = useContactenUpdateMutation(useParam.id);
@@ -46,10 +46,20 @@ function ContactenUpdate() {
         try {
             await updatePost([data, useParam.id]);
             // await updatePost(data).unwrap();
+            // result.data && navigate("../beheer/contacten"); 
         } catch (err) {
             console.log('fail', err)
         }
     };
+    useEffect(() => {
+            result.data && navigate("../beheer/contacten");         
+        }, [result.data]);
+
+    
+    // // on succes
+    // const resultData:void | IContactenDetail = result.data
+    //     result.data && navigate("../");    
+
     // const handleSubmit = async (e: any) => {
     //     e.preventDefault();
     //     const my_result1: MyFilter[] = myFilters.filter(x => (x.my_filter1 !== 1))
