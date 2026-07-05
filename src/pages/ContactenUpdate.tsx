@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import type { IContactenDetail} from '../services/modelspy.types';
 import Box from '@mui/material/Box';
 import { useForm } from "react-hook-form";
-import { useContactenDetailQuery } from '../services/apiSlice';
+import { useContactenDetailQuery, useContactenUpdateMutation } from '../services/apiSlice';
 import { useParams } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -11,6 +11,7 @@ import FormControl from '@mui/material/FormControl';
 // import TextField from '@mui/material/TextField';
 import {FormInputText } from "../form-component/FormInputText";
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 // import { Controller } from "react-hook-form";
 
 function ContactenUpdate() {
@@ -20,6 +21,9 @@ function ContactenUpdate() {
     // const navigate  = useNavigate();
     const [textValue, setTextValue] = useState<string>("");
     const { data, error, isLoading, isError  } = useContactenDetailQuery(useParam.id);
+    // const { data, isLoading, isError  } = useContactenUpdateMutation(useParam.id);
+    const [updatePost, result] = useContactenUpdateMutation(useParam.id)
+    // const [addMyModel, result] = useNewMyModelMutation();
     const defaultValues = {
         "id": 0,
         "naam": "",
@@ -33,8 +37,27 @@ function ContactenUpdate() {
     }
     const {register, handleSubmit, reset, control, setValue } = useForm<IContactenDetail>({
         defaultValues: defaultValues,
+        values: data,
+        resetOptions: {
+            keepDirtyValues: true,
+        }
     });
-    const onSubmit = (data: IContactenDetail) => console.log(data);
+    const onSubmit = async (data: IContactenDetail) => {
+        try {
+            await updatePost([data, useParam.id]);
+            // await updatePost(data).unwrap();
+        } catch (err) {
+            console.log('fail', err)
+        }
+    };
+    // const handleSubmit = async (e: any) => {
+    //     e.preventDefault();
+    //     const my_result1: MyFilter[] = myFilters.filter(x => (x.my_filter1 !== 1))
+    //     setMyResult1(my_result1);
+    //     await addMyModel(myModel)
+    //     // console.log(result);
+    //     setButtonValue("Loading")
+    // };
     // const { register, handleSubmit, watch, formState: {errors}} = useForm();
     
 
@@ -49,10 +72,11 @@ function ContactenUpdate() {
         content = <p>New Eroor!</p>
     } else if (data) {
         // let datetaken = moment(data.date_taken).format('YYYY/MM/DD HH:mm')
-    content = <form>
+    content = <><form>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
-                    <Grid size={8}>                        
+                    
+                    <Grid size={10}>                        
                         <Box sx={{ minWidth: 120, padding: 2}}>
                             <FormControl fullWidth>
                                 <FormInputText
@@ -60,19 +84,102 @@ function ContactenUpdate() {
                                     control={control}
                                     type="string" 
                                     label="Naam: "
-                                    // value={data.naam}
-                                    // value={textValue}
-                                    // onChange={onTextChange}
-                                    // onChange={(event) => {
-                                    //     setValue(event.target.value)
-                                    // }}
                                 />
                             </FormControl>
                         </Box>
                     </Grid>                    
-                </Grid>
-                <Grid container spacing={2}>
-                    <Grid size={8}>                        
+
+                    <Grid size={10}>                        
+                        <Box sx={{ minWidth: 120, padding: 2}}>
+                            <FormControl fullWidth>
+                                <FormInputText
+                                    name="straat_nummer"
+                                    control={control}
+                                    type="string" 
+                                    label="Straat nummer: "
+                                />
+                            </FormControl>
+                        </Box>
+                    </Grid>
+
+                    <Grid size={5}>                        
+                        <Box sx={{ minWidth: 120, padding: 2}}>
+                            <FormControl fullWidth>
+                                <FormInputText
+                                    name="postcode"
+                                    control={control}
+                                    type="string" 
+                                    label="Postcode: "
+                                />
+                            </FormControl>
+                        </Box>
+                    </Grid>
+                    <Grid size={5}>                        
+                        <Box sx={{ minWidth: 120, padding: 2}}>
+                            <FormControl fullWidth>
+                                <FormInputText
+                                    name="plaats"
+                                    control={control}
+                                    type="string" 
+                                    label="Plaats: "
+                                />
+                            </FormControl>
+                        </Box>
+                    </Grid>
+
+                    <Grid size={5}>                        
+                        <Box sx={{ minWidth: 120, padding: 2}}>
+                            <FormControl fullWidth>
+                                <FormInputText
+                                    name="email"
+                                    control={control}
+                                    type="string" 
+                                    label="Email: "
+                                />
+                            </FormControl>
+                        </Box>
+                    </Grid>  
+
+                    <Grid size={5}>                        
+                        <Box sx={{ minWidth: 120, padding: 2}}>
+                            <FormControl fullWidth>
+                                <FormInputText
+                                    name="telefoon"
+                                    control={control}
+                                    type="string" 
+                                    label="Telefoon: "
+                                />
+                            </FormControl>
+                        </Box>
+                    </Grid>
+
+                    <Grid size={10}>                        
+                        <Box sx={{ minWidth: 120, padding: 2}}>
+                            <FormControl fullWidth>
+                                <FormInputText
+                                    name="kvk_nummer"
+                                    control={control}
+                                    type="string" 
+                                    label="KVK-nummer: "
+                                />
+                            </FormControl>
+                        </Box>
+                    </Grid>  
+
+                    <Grid size={10}>                        
+                        <Box sx={{ minWidth: 120, padding: 2}}>
+                            <FormControl fullWidth>
+                                <FormInputText
+                                    name="btw_nummer"
+                                    control={control}
+                                    type="string" 
+                                    label="BTW-nummer: "
+                                />
+                            </FormControl>
+                        </Box>
+                    </Grid>   
+
+                    <Grid size={10}>                        
                         <Box sx={{ minWidth: 120, padding: 2}}>
                             <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
                                 Submit
@@ -84,7 +191,7 @@ function ContactenUpdate() {
                     </Grid>
                 </Grid>
             </Box>
-        </form>
+        </form></>
     } else {
         console.log("data")
     }
