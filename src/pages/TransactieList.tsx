@@ -1,14 +1,21 @@
-// import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTransactieListQuery } from '../services/apiSlice';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { useForm } from "react-hook-form";
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import EditIcon from '@mui/icons-material/Edit';
+import type {ITransactieList} from '../services/modelspy.types'
+import Table from '@mui/material/Table';
+import FormControl from '@mui/material/FormControl';
+import { FormInputText } from '../form-component/FormInputText';
+import TransactieListNewRecords from './TransactieListNewRecords.comp.';
 
 function TransactieList() {
 
     const { data, error, isLoading, isError  } = useTransactieListQuery();
+    // const [rows, setRows] = useState(["", ""]);
 
     let content:any
     if (isLoading) {
@@ -52,20 +59,27 @@ function TransactieList() {
                 "zakelijk_ex_btw": item.zakelijk_ex_btw,
             }
         ))
+       
+        
         content = <Paper sx={{ width: '100%' }}>
             <Typography>
                 Transactie Tabel
             </Typography>
-          <DataGrid
+        <DataGrid
             rows={rows}
             columns={columns}
             autosizeOnMount
+            // onRowClick={handleRowClick}
+            editMode="row"
             // initialState={{ pagination: { paginationModel } }}
             pageSizeOptions={[5, 20]}
-            // checkboxSelection
-            sx={{ border: 0 }}
-          />
-        </Paper>
+            disableRowSelectionOnClick
+            sx={{ border: 1, layoutMode: "grid"}}
+        />
+        <TransactieListNewRecords />
+        
+    </Paper>
+
     } else {
         console.log("data")
     }
